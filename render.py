@@ -343,7 +343,8 @@ class SurveyCommandTranslator(CommandTranslator):
         responses_div = ET.Element('div')
         add_class(responses_div, ClassValues.RESPONSES)
         question.append(responses_div)
-        
+       
+        # make some edits to control textarea versus text HTML tags 
         if question_type == QuestionTypeValues.FILLIN:
             if int(question.get(SourceAttributes.SIZE)) < 100:
                 input_element = ET.Element('input')
