@@ -346,7 +346,14 @@ class SurveyCommandTranslator(CommandTranslator):
        
         # make some edits to control textarea versus text HTML tags 
         if question_type == QuestionTypeValues.FILLIN:
-            if int(question.get(SourceAttributes.SIZE)) < 100:
+            if int(question.get(SourceAttributes.SIZE)) > 100:
+                input_element = ET.Element('textarea')
+                responses_div.append(input_element)
+                input_element.set('name', survey_name(characteristic_name))
+                
+                if characteristic_value is not None:
+                    input_element.text = characteristic_value
+            else:
                 input_element = ET.Element('input')
                 responses_div.append(input_element)
                 input_element.set('type', 'text')
@@ -355,14 +362,6 @@ class SurveyCommandTranslator(CommandTranslator):
                 
                 if characteristic_value is not None:
                     input_element.set('value', characteristic_value)
-            else:
-                input_element = ET.Element('textarea')
-                responses_div.append(input_element)
-                input_element.set('name', survey_name(characteristic_name))
-                
-                if characteristic_value is not None:
-                    input_element.text = characteristic_value
-                 
             
         if question_type == QuestionTypeValues.DATE:
             """ For dates, create a div with Month popup, Day fillin and Year fillin. """
